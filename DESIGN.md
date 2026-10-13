@@ -101,3 +101,5 @@ D01–D09: existing name/tagline/mark approved; neutral palette/system fonts fin
 ## Open Questions
 
 None for coding. Preserve owner constraints when adapting layouts to each platform.
+
+An enrollment response lost after key creation leads to a fresh passkey sign-in and then operation-status reconciliation. The UI never promises that a lost token can be recovered from logs or replay. If an invitation was created but its one-time token response is lost, show its invitation ID and explain that the operator must revoke it before issuing another. These are the recovery contracts in ARCHITECTURE, not alternative authentication paths.
