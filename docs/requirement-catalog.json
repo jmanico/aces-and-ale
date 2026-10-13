@@ -1,0 +1,988 @@
+[
+  {
+    "id": "FR-1.1",
+    "capability": "TOUR",
+    "title": "Start a complete eight-player tournament",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-and-participant-records",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "The server MUST start a tournament only when its eight-player roster, seeds, source and generated plan satisfy the start preconditions.",
+    "expected": "a complete draft and current version, an admin starts it, the state becomes active with the roster and plan locked",
+    "invalid": "an incomplete or concurrently changed draft, start is attempted, the request fails without entering active",
+    "upstream": [
+      "FR-1.3",
+      "FR-1.4",
+      "FR-2.2"
+    ],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-1.2",
+    "capability": "TOUR",
+    "title": "Display supplied participant names",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-and-participant-records",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-WEB-01",
+      "SEC-MOBILE-01"
+    ],
+    "statement": "Clients MUST display the permitted tournament-specific participant names as inert text with duplicate-name disambiguation in selection contexts.",
+    "expected": "two participants with the same name, their choices are rendered, each is distinguished by its short UUID suffix",
+    "invalid": "a hostile supplied name, a permitted view renders it, it remains text and cannot execute",
+    "upstream": [
+      "FR-1.4"
+    ],
+    "design": "components-and-feedback",
+    "public": true
+  },
+  {
+    "id": "FR-1.3",
+    "capability": "TOUR",
+    "title": "Create an empty public tournament draft",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-and-participant-records",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "An admin MUST be able to create a public empty draft with the specified metadata defaults and field bounds.",
+    "expected": "only a valid name, an admin creates a draft, the public record contains zero players and Court 1",
+    "invalid": "an empty name or unknown input property, creation is attempted, INVALID_INPUT leaves no draft",
+    "upstream": [],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-1.4",
+    "capability": "TOUR",
+    "title": "Replace the draft roster and seeds atomically",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-and-participant-records",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "The server MUST replace a draft roster atomically within the zero-to-eight distinct-player and unique optional seed bounds.",
+    "expected": "a draft and a valid seed swap, an admin replaces the roster with publication attestations, both seed changes commit together",
+    "invalid": "a ninth player, duplicate player/seed or active tournament, replacement is attempted, no roster change commits",
+    "upstream": [
+      "FR-1.3",
+      "FR-1.7"
+    ],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-1.5",
+    "capability": "TOUR",
+    "title": "Cancel an unfinished tournament",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-and-participant-records",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Cancellation MUST cancel remaining play, preserve completed results and leave no champion under the defined state and open-order rules.",
+    "expected": "an active tournament with completed and scheduled matches and no open orders, cancellation is submitted with reason, scheduled play is cancelled and completed results remain",
+    "invalid": "an open beer order or completed tournament, cancellation is attempted, STATE_CONFLICT leaves the tournament unchanged",
+    "upstream": [
+      "FR-1.3"
+    ],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-1.6",
+    "capability": "TOUR",
+    "title": "Archive completed or cancelled tournaments",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-and-participant-records",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Archival MUST make eligible tournaments read-only and remove them from discovery while retaining their public direct link during retention.",
+    "expected": "a completed tournament with no open orders, an admin archives it, list discovery omits it and direct read still succeeds",
+    "invalid": "an active tournament, archival is attempted, STATE_CONFLICT preserves its state",
+    "upstream": [
+      "FR-1.3"
+    ],
+    "design": "navigation-and-screens",
+    "public": false
+  },
+  {
+    "id": "FR-1.7",
+    "capability": "TOUR",
+    "title": "Maintain explicit player identities",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-and-participant-records",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Admins MUST create and select stable player UUID identities without merging or restricting duplicate display names.",
+    "expected": "an existing name, an admin explicitly creates a second player with that name, a distinct identity is created",
+    "invalid": "an erased player reference, roster assignment is attempted, the erased identity is not assignable",
+    "upstream": [],
+    "design": "navigation-and-screens",
+    "public": false
+  },
+  {
+    "id": "FR-1.8",
+    "capability": "TOUR",
+    "title": "Correct a tournament name snapshot",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-and-participant-records",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "A participant-name correction MUST affect only the selected tournament snapshot and permitted states.",
+    "expected": "one player assigned to two tournaments, an admin corrects one participation name, the other snapshot remains unchanged",
+    "invalid": "an archived or cancelled tournament, a name correction is attempted, no snapshot change occurs",
+    "upstream": [
+      "FR-1.4"
+    ],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-1.9",
+    "capability": "TOUR",
+    "title": "Edit tournament metadata",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-and-participant-records",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Admins MUST edit only the metadata fields permitted in the current tournament state without changing stored instants or regenerating pairings.",
+    "expected": "an active tournament, venue/time zone is changed with current version, stored match instants and competitors remain unchanged",
+    "invalid": "an active tournament, ranking source or courts are changed, the request is rejected",
+    "upstream": [
+      "FR-1.3"
+    ],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-1.10",
+    "capability": "TOUR",
+    "title": "Delete an eligible draft",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-and-participant-records",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Admins MUST be able to delete only draft tournaments with no retained commerce references.",
+    "expected": "an eligible draft, deletion commits, subsequent public read returns NOT_FOUND and sanitized audit remains",
+    "invalid": "a draft with a retained sale or order, deletion is attempted, STATE_CONFLICT preserves it",
+    "upstream": [
+      "FR-1.3"
+    ],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-2.1",
+    "capability": "PLAN",
+    "title": "Read the complete match plan",
+    "owner": "REQUIREMENTS.md",
+    "section": "matches-and-match-plan",
+    "architecture": "ARC-PLAN",
+    "security": [
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01"
+    ],
+    "statement": "Clients MUST show the complete seven-match plan with canonical rounds and future-winner placeholders.",
+    "expected": "a generated draft with unplayed quarterfinals, the plan is read, four quarterfinals/two semifinals/final appear with feeder labels",
+    "invalid": "no generated plan, the view is opened, it shows the explicit empty plan state without fabricated matches",
+    "upstream": [
+      "FR-2.2"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": true
+  },
+  {
+    "id": "FR-2.2",
+    "capability": "PLAN",
+    "title": "Generate the fixed seeded bracket",
+    "owner": "REQUIREMENTS.md",
+    "section": "matches-and-match-plan",
+    "architecture": "ARC-PLAN",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "An admin MUST generate the fixed 1v8/4v5/3v6/2v7 singles knockout bracket from the approved source and complete relative seeds.",
+    "expected": "a complete draft seeded1–8, generation commits, exactly seven correctly linked matches exist",
+    "invalid": "an active tournament or incomplete seed permutation, generation is attempted, no bracket is replaced",
+    "upstream": [
+      "FR-1.4"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-2.3",
+    "capability": "PLAN",
+    "title": "Schedule a match without known conflicts",
+    "owner": "REQUIREMENTS.md",
+    "section": "matches-and-match-plan",
+    "architecture": "ARC-PLAN",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Manual scheduling MUST enforce complete schedule fields, valid local instants and the defined court/player/feeder constraints.",
+    "expected": "a scheduled match and available court/interval, an admin saves a complete schedule, its UTC instant and local display agree",
+    "invalid": "a court overlap, nonexistent local time or partial schedule, saving is attempted, INVALID_INPUT preserves the former schedule",
+    "upstream": [
+      "FR-2.2"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-3.1",
+    "capability": "SCORE",
+    "title": "Read the tournament scoreboard",
+    "owner": "REQUIREMENTS.md",
+    "section": "scoring-and-corrections",
+    "architecture": "ARC-SCORE",
+    "security": [
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01"
+    ],
+    "statement": "Clients MUST show all match scores, status, participants/placeholders and outcome labels without substituting zero for absent data.",
+    "expected": "a started match with no games, the scoreboard is read, it says In progress — no score yet",
+    "invalid": "a failed initial read, the screen renders, it shows Unavailable/Retry without zero scores",
+    "upstream": [
+      "FR-2.1"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": true
+  },
+  {
+    "id": "FR-3.2",
+    "capability": "SCORE",
+    "title": "Save an in-progress game/set score",
+    "owner": "REQUIREMENTS.md",
+    "section": "scoring-and-corrections",
+    "architecture": "ARC-SCORE",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "An admin MUST save validated in-progress set scores with version checks and no implicit match completion.",
+    "expected": "an in-progress match and valid partial score, Save score commits, the score changes and the match remains in progress",
+    "invalid": "a stale tournament version, score save is attempted, VERSION_CONFLICT preserves the stored score and client draft",
+    "upstream": [
+      "FR-3.4",
+      "FR-3.3"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-3.3",
+    "capability": "SCORE",
+    "title": "Start an eligible match",
+    "owner": "REQUIREMENTS.md",
+    "section": "matches-and-match-plan",
+    "architecture": "ARC-SCORE",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "An admin MUST start only an eligible scheduled match with known competitors, completed feeders and no conflicting in-progress player or court.",
+    "expected": "an active tournament and eligible scheduled match, start commits, actual start is recorded and state is in_progress",
+    "invalid": "an incomplete feeder or busy player/court, start is attempted, no match enters in_progress",
+    "upstream": [
+      "FR-1.1"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-3.4",
+    "capability": "SCORE",
+    "title": "Validate best-of-three set scores",
+    "owner": "REQUIREMENTS.md",
+    "section": "scoring-and-corrections",
+    "architecture": "ARC-SCORE",
+    "security": [
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "The score validator MUST enforce the specified game, set, tie-break and match-winning invariants.",
+    "expected": "valid sets 6–4 and 7–6 with tie-break7–5, validation runs, it derives the same winner for both sets and match",
+    "invalid": "an extra set after two wins or inconsistent tie-break winner, validation runs, the score is rejected",
+    "upstream": [],
+    "design": "tournament-and-score-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-3.5",
+    "capability": "SCORE",
+    "title": "Record a walkover or retirement",
+    "owner": "REQUIREMENTS.md",
+    "section": "scoring-and-corrections",
+    "architecture": "ARC-SCORE",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "An exceptional result MUST record the permitted unavailable player/outcome and advance the opponent without fabricated scores.",
+    "expected": "an unstarted eligible match and one unavailable player, a walkover commits with reason, the opponent wins with empty sets",
+    "invalid": "both players unavailable or retirement on an unstarted match, exception completion is attempted, no invented winner is stored",
+    "upstream": [
+      "FR-3.6"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-3.6",
+    "capability": "SCORE",
+    "title": "Complete and advance a normal result",
+    "owner": "REQUIREMENTS.md",
+    "section": "scoring-and-corrections",
+    "architecture": "ARC-SCORE",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "A normal completion MUST atomically store its validated result, advance the winner and complete the tournament when the final finishes.",
+    "expected": "a final with valid winning sets, completion commits, final result, champion and completed tournament are visible together",
+    "invalid": "an incomplete normal score or concurrent stale completion, completion is attempted, no partial advancement occurs",
+    "upstream": [
+      "FR-3.3",
+      "FR-3.4"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-3.7",
+    "capability": "SCORE",
+    "title": "Correct a completed result safely",
+    "owner": "REQUIREMENTS.md",
+    "section": "scoring-and-corrections",
+    "architecture": "ARC-SCORE",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "A completed-result correction MUST apply the specified same-winner/changed-winner descendant guard and recompute dependent projections.",
+    "expected": "a completed quarterfinal with all descendants scheduled, its winner is corrected, next-match competitor and statistics change once",
+    "invalid": "a started descendant and changed winner, correction is attempted, DOWNSTREAM_STARTED preserves all results",
+    "upstream": [
+      "FR-3.6"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-4.1",
+    "capability": "RANK",
+    "title": "Read world ranking snapshots",
+    "owner": "REQUIREMENTS.md",
+    "section": "world-and-local-rankings",
+    "architecture": "ARC-RANK",
+    "security": [
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01"
+    ],
+    "statement": "Public clients MUST show the current world snapshot with source, as-of date, tie and stale/unranked states.",
+    "expected": "a published world snapshot with tied positions, it is read, source/date/tied rows use defined ordering",
+    "invalid": "no world snapshot, the view opens, it says No rankings published without computed ranks",
+    "upstream": [
+      "FR-4.3"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": true
+  },
+  {
+    "id": "FR-4.2",
+    "capability": "RANK",
+    "title": "Read local ranking snapshots",
+    "owner": "REQUIREMENTS.md",
+    "section": "world-and-local-rankings",
+    "architecture": "ARC-RANK",
+    "security": [
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01"
+    ],
+    "statement": "Public clients MUST show the current local snapshot with configured local scope and defined stale/unranked states.",
+    "expected": "a local snapshot older than 30 days, it is read, local scope label and Out of date appear while entries remain",
+    "invalid": "a player absent from the snapshot, its requested ranking is shown, it says Unranked rather than zero",
+    "upstream": [
+      "FR-4.3"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": true
+  },
+  {
+    "id": "FR-4.3",
+    "capability": "RANK",
+    "title": "Replace a ranking snapshot atomically",
+    "owner": "REQUIREMENTS.md",
+    "section": "world-and-local-rankings",
+    "architecture": "ARC-RANK",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "An admin MUST replace one complete world/local snapshot atomically using validated registered-player positions and source metadata.",
+    "expected": "a valid replacement with equal positions for different players, it commits, both tied entries are visible together",
+    "invalid": "a repeated player, future as-of date or stale version, replacement is attempted, the current snapshot remains unchanged",
+    "upstream": [
+      "FR-1.7"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-5.1",
+    "capability": "STATS",
+    "title": "Derive current tournament statistics",
+    "owner": "REQUIREMENTS.md",
+    "section": "tournament-statistics",
+    "architecture": "ARC-STATS",
+    "security": [
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "Tournament statistics MUST derive each participant’s played/wins/losses/percentage from current completed outcomes exactly once.",
+    "expected": "one normal win and one retirement loss, statistics are read, played2 wins1 losses1 percentage50.0 appear",
+    "invalid": "no completed results, statistics are read, counts are zero and percentage is unavailable",
+    "upstream": [
+      "FR-3.6"
+    ],
+    "design": "tournament-and-score-presentation",
+    "public": true
+  },
+  {
+    "id": "FR-6.1",
+    "capability": "MERCH",
+    "title": "Maintain merchandise catalog records",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-MERCH",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Admins MUST create/edit merchandise catalog fields under the specified name, price, currency and stock bounds without changing history.",
+    "expected": "an item with prior sales, its name/price is changed, future sales use new values while prior snapshots remain",
+    "invalid": "a fractional price or unsupported currency, catalog save is attempted, no item change occurs",
+    "upstream": [],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-6.2",
+    "capability": "MERCH",
+    "title": "Record one stock-backed merchandise sale",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-MERCH",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "A merchandise sale MUST atomically snapshot one item’s price/currency, record quantity and decrement available stock once.",
+    "expected": "stock 5 and quantity 3, a sale commits, stock 2 and one immutable sale exist",
+    "invalid": "two competing sales exceeding available stock, both are submitted, at most stock-supported sales commit and stock never becomes negative",
+    "upstream": [
+      "FR-6.1",
+      "FR-8.1",
+      "FR-8.2"
+    ],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-6.3",
+    "capability": "MERCH",
+    "title": "Report retained merchandise sales",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-MERCH",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "Merchandise reports MUST sum retained sale quantities/totals in the selected tournament/time range separately by currency.",
+    "expected": "EUR and USD sales in a range, the report is read, separate exact totals and item units appear",
+    "invalid": "a reversed or greater-than 366-day explicit range, report read is attempted, INVALID_INPUT is returned without a misleading total",
+    "upstream": [
+      "FR-6.2"
+    ],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-6.4",
+    "capability": "MERCH",
+    "title": "Retire merchandise from new sales",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-MERCH",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Retiring a catalog item MUST prevent new sales while preserving referenced history.",
+    "expected": "a referenced active item, it is marked inactive, history remains and a new sale is rejected",
+    "invalid": "a direct API sale against an inactive item, it is attempted, no stock or sale change occurs",
+    "upstream": [
+      "FR-6.1"
+    ],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-6.5",
+    "capability": "MERCH",
+    "title": "Adjust stock with an accountable delta",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-MERCH",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "A stock adjustment MUST apply one nonzero bounded delta with reason and stable operation reference.",
+    "expected": "stock 5 and delta−2 with reason, adjustment is retried identically, resulting stock is3 with one adjustment",
+    "invalid": "zero delta or resulting negative stock, adjustment is attempted, no stock change commits",
+    "upstream": [
+      "FR-6.1",
+      "FR-8.1"
+    ],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-7.1",
+    "capability": "BEER",
+    "title": "Maintain menu items and retirement",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-BEER",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Admins MUST create/edit/retire menu items under the specified bounds while preserving existing order snapshots.",
+    "expected": "an item in an open order, its price changes and it is retired, the order retains its old price and can complete",
+    "invalid": "an inactive item, a new order is attempted, it is rejected without an order",
+    "upstream": [],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-7.2",
+    "capability": "BEER",
+    "title": "Create a fixed beer-garden order",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-BEER",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "An order MUST snapshot one-to-fifty distinct same-currency menu lines and a monotonic tournament display number atomically.",
+    "expected": "valid current menu versions and distinct lines, order creation commits, one open order has immutable lines and exact total",
+    "invalid": "mixed currencies, duplicate lines or stale item version, creation is attempted, no partial order exists",
+    "upstream": [
+      "FR-7.1",
+      "FR-8.1",
+      "FR-8.2"
+    ],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-7.3",
+    "capability": "BEER",
+    "title": "Resolve an order into one terminal outcome",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-BEER",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "An open order MUST become completed with one sale or cancelled with none, with terminal replay and no-reopen rules enforced.",
+    "expected": "an open order, completion is retried or races cancellation, exactly one terminal state and at most one sale result",
+    "invalid": "a terminal order, the opposite terminal action is requested, STATE_CONFLICT preserves its state",
+    "upstream": [
+      "FR-7.2"
+    ],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-7.4",
+    "capability": "BEER",
+    "title": "Report completed beer-garden sales",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-BEER",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "Beer-garden reports MUST total only completed-order sales in the selected range separately by currency.",
+    "expected": "open/cancelled/completed orders, the report is read, only completed-sale values contribute",
+    "invalid": "an invalid time range, report read is attempted, no misleading report is returned",
+    "upstream": [
+      "FR-7.3"
+    ],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-7.5",
+    "capability": "BEER",
+    "title": "Read the open order queue",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-BEER",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01"
+    ],
+    "statement": "Admins MUST read open orders oldest-first with stable display number, fixed lines and totals.",
+    "expected": "multiple open orders, the queue is read, created-time/UUID ordering and exact totals are displayed",
+    "invalid": "no open orders, the queue is read, the explicit empty state appears without terminal orders",
+    "upstream": [
+      "FR-7.2"
+    ],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-8.1",
+    "capability": "COMM",
+    "title": "Reconcile stable mutation outcomes",
+    "owner": "REQUIREMENTS.md",
+    "section": "reads-writes-and-failures",
+    "architecture": "ARC-CONTRACT",
+    "security": [
+      "SEC-ACCESS-01",
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01",
+      "SEC-DATA-02",
+      "SEC-SESSION-01"
+    ],
+    "statement": "Every mutation MUST preserve actor/action/content-bound operation references and reconcile uncertain outcomes without repeating effects.",
+    "expected": "a committed write with lost acknowledgement, the same command/reference is retried, the committed result is returned without another effect",
+    "invalid": "the same reference with changed content or another actor, it is submitted/looked up, conflict or inaccessible outcome is returned without disclosure",
+    "upstream": [],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-8.2",
+    "capability": "COMM",
+    "title": "Represent money without payment processing",
+    "owner": "REQUIREMENTS.md",
+    "section": "merchandise-beer-garden-and-money",
+    "architecture": "ARC-DOMAIN",
+    "security": [
+      "SEC-INPUT-01",
+      "SEC-DATA-02"
+    ],
+    "statement": "Money MUST use exact bounded integer minor units, currency-separated decimal-string totals and the explicit no-payment/no-reversal scope.",
+    "expected": "EUR unit price1250 and quantity 3, a total is computed, it is3750 minor units and displays EUR37.50",
+    "invalid": "a nonfinite/fractional minor-unit price or payment credential field, it is submitted, the input is rejected",
+    "upstream": [],
+    "design": "commerce-presentation",
+    "public": false
+  },
+  {
+    "id": "FR-9.1",
+    "capability": "TOUR",
+    "title": "Discover public tournaments by cursor",
+    "owner": "REQUIREMENTS.md",
+    "section": "reads-writes-and-failures",
+    "architecture": "ARC-TOUR",
+    "security": [
+      "SEC-ACCESS-02",
+      "SEC-INPUT-01",
+      "SEC-RUNTIME-01"
+    ],
+    "statement": "Public discovery MUST apply the specified filtering, nonarchived selection and stable bounded cursor ordering.",
+    "expected": "multiple nonarchived tournaments, pages are requested, newest-first/UUID ordering and the chosen filters are honored",
+    "invalid": "an altered or filter-mismatched cursor, list read is attempted, MALFORMED_REQUEST is returned",
+    "upstream": [
+      "FR-1.3"
+    ],
+    "design": "navigation-and-screens",
+    "public": true
+  },
+  {
+    "id": "FR-9.2",
+    "capability": "CORE",
+    "title": "Deliver platform parity",
+    "owner": "REQUIREMENTS.md",
+    "section": "launch-scope",
+    "architecture": "ARC-WEB ARC-MOBILE",
+    "security": [
+      "SEC-WEB-01",
+      "SEC-MOBILE-01",
+      "SEC-SESSION-01"
+    ],
+    "statement": "Web, iOS and Android MUST support all granted launch workflows with the same domain contracts and supported platform floor.",
+    "expected": "equivalent fixtures and permissions on all three clients, the same supported workflow is completed, its observable domain result agrees",
+    "invalid": "an unsupported device or missing passkey capability, authentication is attempted, supported-device guidance appears without weaker fallback",
+    "upstream": [],
+    "design": "navigation-and-screens",
+    "public": false
+  },
+  {
+    "id": "FR-9.3",
+    "capability": "CORE",
+    "title": "Refresh views and preserve uncertainty safely",
+    "owner": "REQUIREMENTS.md",
+    "section": "reads-writes-and-failures",
+    "architecture": "ARC-WEB ARC-MOBILE",
+    "security": [
+      "SEC-SESSION-01",
+      "SEC-INPUT-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Clients MUST apply the defined foreground polling, bounded retries, memory-only dirty forms and offline/stale/unknown-result states.",
+    "expected": "a visible tournament screen and a committed score, healthy polling occurs, the update is visible within the specified seven-second target",
+    "invalid": "a failed poll or lost write response, the client reacts, prior data/input is preserved with stale or unknown status and no new write reference",
+    "upstream": [],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-9.4",
+    "capability": "OPS",
+    "title": "Meet the bounded launch capacity profile",
+    "owner": "REQUIREMENTS.md",
+    "section": "capacity-and-operations-acceptance",
+    "architecture": "ARC-API ARC-DATA ARC-OPS",
+    "security": [
+      "SEC-RUNTIME-01",
+      "SEC-OPS-01"
+    ],
+    "statement": "The deployed service MUST meet the specified sixty-minute capacity/latency/error/visibility profile before promotion.",
+    "expected": "the published fixture and request distribution, the60-minute load run completes, all specified percentiles/error/visibility thresholds pass",
+    "invalid": "oversized or abusive requests during the profile, limits are exercised, rejected work has no partial protected effects",
+    "upstream": [],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-9.5",
+    "capability": "OPS",
+    "title": "Recover within defined loss and time targets",
+    "owner": "REQUIREMENTS.md",
+    "section": "capacity-and-operations-acceptance",
+    "architecture": "ARC-OPS ARC-DATA",
+    "security": [
+      "SEC-DATA-01",
+      "SEC-OPS-01",
+      "SEC-FAIL-01"
+    ],
+    "statement": "Quarterly isolated restore verification MUST demonstrate RPO≤5min and RTO≤60min with privacy erasure replay before serving.",
+    "expected": "a recent backup and erasure tombstones, an isolated restore is performed, recovery meets both targets with erased names absent",
+    "invalid": "unavailable tombstones or failed integrity checks, restored service promotion is attempted, it remains isolated",
+    "upstream": [],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-9.6",
+    "capability": "OPS",
+    "title": "Run bounded maintenance jobs",
+    "owner": "REQUIREMENTS.md",
+    "section": "capacity-and-operations-acceptance",
+    "architecture": "ARC-OPS",
+    "security": [
+      "SEC-RUNTIME-01",
+      "SEC-OPS-01",
+      "SEC-DATA-01"
+    ],
+    "statement": "Maintenance MUST run the defined expiry, retention and audit jobs with election, bounded batches, durable cursors and retry/alert behavior.",
+    "expected": "two worker instances, scheduled maintenance becomes due, only the elected worker processes a batch and records progress",
+    "invalid": "a dependency repeatedly fails, the job exhausts its three retries, it stops that attempt and alerts while later runs resume the durable cursor",
+    "upstream": [],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "FR-9.7",
+    "capability": "OPS",
+    "title": "Measure monthly service availability",
+    "owner": "REQUIREMENTS.md",
+    "section": "capacity-and-operations-acceptance",
+    "architecture": "ARC-OPS",
+    "security": [
+      "SEC-OPS-01"
+    ],
+    "statement": "Operations MUST measure public/admin availability against99.5% monthly including planned downtime.",
+    "expected": "a full month of health/synthetic transaction evidence, availability is calculated, planned and unplanned failures both count",
+    "invalid": "both readiness checks fail for two minutes, monitoring evaluates them, the specified high-severity alert fires",
+    "upstream": [],
+    "design": "components-and-feedback",
+    "public": false
+  },
+  {
+    "id": "DES-01",
+    "capability": "CORE",
+    "title": "Accessible complete launch workflows",
+    "owner": "DESIGN.md",
+    "section": "formatting-and-accessibility",
+    "architecture": "ARC-WEB ARC-MOBILE ARC-TOKENS",
+    "security": [
+      "SEC-WEB-01",
+      "SEC-MOBILE-01",
+      "SEC-ACCESS-02"
+    ],
+    "statement": "Every supported user workflow MUST satisfy the specified responsive, semantic, feedback and WCAG2.2AA/equivalent native accessibility outcomes.",
+    "expected": "a supported workflow, keyboard and assistive-technology users complete it, names/roles/states, focus and feedback convey the same outcome",
+    "invalid": "large text,320px width or a blocking validation error, the workflow is exercised, no essential control/content becomes inaccessible",
+    "upstream": [],
+    "design": "formatting-and-accessibility",
+    "public": false
+  }
+]

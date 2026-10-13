@@ -1,92 +1,103 @@
-## Required Design Inputs
+# Design
 
-- Brand personality: TO BE DECIDED
-- Audience/workflows: [REQUIREMENTS.md](REQUIREMENTS.md); permissions/disclosure: [SECURITY.md](SECURITY.md#access-and-disclosure-policy).
-- Platform targets: [ARCHITECTURE.md](ARCHITECTURE.md#selected-technologies). Viewing conditions, essential sizes and native design mappings: TO BE DECIDED.
-- Light / dark mode: TO BE DECIDED
-- Existing assets: [logo.svg](logo.svg) and [README variant](docs/assets/readme-logo.svg). Additional external/preexisting assets: TO BE DECIDED.
+Version 1.0.0. The user's2026-10-13 delegation approves the existing Aces & Ale identity and the defaults below. This owner defines presentation and accessibility, not business rules or grants. [REQUIREMENTS](REQUIREMENTS.md) owns behavior; [ARCHITECTURE](ARCHITECTURE.md) owns client/contracts; [SECURITY](SECURITY.md) owns disclosure and enforcement. **DES-01** is the complete-workflow presentation/accessibility requirement, formalized in [its requirement record](docs/requirements/DES-01.md).
 
-## Brand and Logo
+## Brand and logo
 
-Current repository display name: **Aces & Ale**; current README tagline: **Eight players. Every match. Beyond the court.** These record existing wording, not evidence of formal brand approval. Naming/tagline approval, brand direction and any future wordmark: TO BE DECIDED. The specifications below are neutral design defaults, not inferred brand preferences or additional product requirements.
+Name: **Aces & Ale**. Tagline: **Eight players. Every match. Beyond the court.** Personality: calm, practical and welcoming; clear scores and readable controls take priority over decoration. Existing [logo.svg](logo.svg) is the approved generic tennis-ball mark; [README variant](docs/assets/readme-logo.svg) supplies its white clear-space canvas. No wordmark, mascot, stock photography, external fonts or additional brand assets are required. Original brand approval history was not supplied; this paragraph records the new delegated approval, not invented history.
 
-`logo.svg` is a single generic tennis-ball mark: a dark circular silhouette with two white curved seams. It represents tennis only. It contains no lettering, mascot, external asset, gradient, or affiliation imagery. The [README variant](docs/assets/readme-logo.svg) embeds the unchanged 64 × 64 mark at (16,16) in a 96 × 96 white surface, providing quarter-box clear space. It is intended for the README header; the original remains the source mark.
+Use the original square64×64 viewBox, minimum 24×24 CSSpx/native points, with clear space at least one quarter of displayed width on every side. Keep dark silhouette and white seams, on white or the light page background. Never stretch, rotate, crop, recolor, shadow or place over photographs/dark backgrounds. Meaningful logo has an accessible name; hide decorative duplicates from assistive technology. A header logo link navigates to the public tournament list and is named `Aces & Ale — tournaments`.
 
-- Use the supplied 64 × 64 viewBox at its original square proportions, on `background` or `surface`.
-- Minimum display box: 24 × 24 CSS pixels. Clear space: at least one quarter of the displayed box width outside the box on every side.
-- Colors: `primary` #1F2937 and `surface` #FFFFFF. The SVG canvas is transparent; white seams are opaque.
-- Do not stretch, rotate, crop, recolor, add shadows, place over photographs, or combine with an unapproved wordmark. Dark-background use: TO BE DECIDED.
-- When meaningful, provide an accessible name describing the mark or its control's action. When adjacent text supplies the same meaning, hide the decorative mark from assistive technology. Do not make the mark a navigation control unless a destination is specified.
+## Color palette
 
-## Color Palette
+Light mode only; no theme toggle. Both platforms retain the light palette even when the OS is dark. Status always uses words/icons in addition to color; red/green never identifies players.
 
-Neutral light-surface defaults; final brand colors and supported modes: TO BE DECIDED.
-
-| Token | Hex | Use |
+| Token | Value | Use |
 | --- | --- | --- |
-| `primary` | `#1F2937` | Main actions, links, focus indicator, logo silhouette |
-| `secondary` | `#4B5563` | Supporting text and control boundaries |
-| `background` | `#F9FAFB` | Page background |
-| `surface` | `#FFFFFF` | Content surfaces, field interiors, inverse labels |
-| `text` | `#111827` | Main text and numeric information |
-| `error` | `#B91C1C` | Error text and indicators |
-| `success` | `#166534` | Confirmed-success text and indicators |
+| primary | #1F2937 | Actions, links, focus, logo |
+| secondary | #4B5563 | Supporting text/boundaries |
+| background | #F9FAFB | Page background |
+| surface | #FFFFFF | Cards/fields/inverse labels |
+| text | #111827 | Main text and numbers |
+| error | #B91C1C | Errors |
+| success | #166534 | Confirmed success |
 
-Approved text/background pairs: `text`, `primary`, `secondary`, `error`, or `success` on `surface` or `background`; `surface` text on `primary`. All exceed 4.5:1. Do not use other text pairings without checking contrast. Use the same approved colors for hover, adding an underline or boundary change instead of reducing opacity. Communicate feedback through words as well as color. Red and green do not imply player identity, ranking position, or match outcome.
+Approved text pairs: text/primary/secondary/error/success on surface or background, and surface on primary. Preserve contrast on hover/pressed/disabled states; indicate interaction with underline/boundary/wording rather than opacity alone. No gradients or motion decoration.
 
 ## Typography
 
-Brand typography: UNKNOWN. Broader typography direction: TO BE DECIDED. Default family: `system-ui`, falling back to `-apple-system`, `BlinkMacSystemFont`, `"Segoe UI"`, then `sans-serif`. Native system fonts provide readable text without external font assets.
+Use system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif on web; platform system font on native. Weights400/600/700. Web base1rem follows user defaults (ordinarily16CSSpx); native base16sp/points with platform font scaling enabled, never clamp maximum size. Supporting14, body/controls16, section20, page/score32; native values map the same numeric sizes and text-scale preferences. Line heights1.5 for body/support,1.3 section,1.2 page/score. Tabular numerals when supported. Names wrap; full text always remains accessible. No automatic capitalization changes. Inline `bdi`/native direction isolation protects mixed-script names without accepting override control characters prohibited by REQUIREMENTS.
 
-| Role | Size | Line height | Weight |
-| --- | --- | --- | --- |
-| Supporting text | 0.875rem | 1.5 | 400 |
-| Body, controls | 1rem | 1.5 | 400; 600 for labels |
-| Section heading | 1.25rem | 1.3 | 600 |
-| Page heading | 2rem | 1.2 | 700 |
-| Score emphasis | 2rem | 1.2 | 700 |
+## Layout and spacing
 
-Reference size: 1rem equals the user's default text size, ordinarily 16 CSS pixels. Supported weights: 400, 600, 700. Use tabular numerals for scores and ranking values where available. Wrap long player names; do not use clipping as the only presentation. Preserve normal capitalization and user text-size preferences.
+Spacing4/8/12/16/24/32/48px (native density-independent points). Gap8 within related controls,16 within groups,24/32 between groups. Fluid max-width1200px, gutters16 below640,24 below1024,32 above; 4/8/12-column grids respectively. Native uses equivalent width classes in logical points and safe-area insets. Collapse to one logical reading order at narrow widths; no page-wide horizontal scrolling at 320CSSpx or200% zoom. An essential comparison table may scroll inside a labeled region with persistent row/column context. Support phone, tablet, desktop and ordinary large browser windows320–1920px; no separate TV/kiosk app. Test indoor and bright outdoor readability at normal device brightness, without promising sunlight hardware performance.
 
-## Layout and Spacing
+## Navigation and screens
 
-- Spacing scale: 4, 8, 12, 16, 24, 32, 48 CSS pixels. Use 8 between related elements, 16 within groups, and 24 or 32 between groups.
-- Use a fluid content area with a maximum width of 1200 CSS pixels. Basic grid: four columns below 640, eight from 640, twelve from 1024 CSS pixels; content may span the full grid.
-- Responsive breakpoints: 640 and 1024 CSS pixels. Outer gutters: 16, 24, and 32 CSS pixels respectively. These are layout defaults, not commitments to a platform.
-- Collapse independent regions into a single reading order when space is insufficient. Preserve the same logical reading and keyboard order across sizes.
-- Keep scores adjacent to their corresponding player names. Visually distinguish ranking scope with explicit labels; functional associations and scope are owned by [FR-3/4](REQUIREMENTS.md#scoreboard). Use aligned rows for comparisons, with descriptive headers where data is tabular.
-- At 320 CSS pixels wide, reflow content without page-wide horizontal scrolling. Any essential two-dimensional table may scroll within a clearly identified region without losing access to its labels.
-- Tournament structure, navigation, scoring subdivisions, and statistics presentation remain TO BE DECIDED where the requirements leave behavior open. Do not assume a knockout bracket, live updates, or role-specific dashboards.
+Public landing is `/tournaments`; persistent destinations `Tournaments`, `Rankings`, `Sign in`. Signed-in admins additionally see `Players`, `Catalog`, `Menu`, `Accounts`, and their `Account`/`Sign out`. Revoked admins see only public destinations and own Account/Sign out. Native uses the same labels in a drawer opened by a named menu button; public Tournaments and Rankings are bottom tabs, detail screens push on the navigation stack. Web uses header links and responsive menu below640px; active destination has aria-current. Menu/modal focus returns to its trigger on close; navigation moves focus to the new page heading on web and announces the new native screen title.
 
-## Components
+| Route / native screen | Contents and authorized actions |
+| --- | --- |
+| `/tournaments` | Search name prefix, state filter, newest-first cards, explicit empty state, `Load more`; admin `Create tournament` |
+| `/tournaments/:id` | Name/state/venue/time zone, public Overview, Match plan, Scoreboard, Statistics tabs; admin `Manage`, `Commerce`; public direct archived banner |
+| `/tournaments/new`, `/tournaments/:id/manage` | Metadata, court names, ranking source, roster slots1–8 and seed fields; select/create player, name correction, generate/replace plan, start/cancel/archive/delete according to state |
+| `/tournaments/:id/matches/:matchId` | Read-only competitors/status/score and schedule; admin schedule, start, set-score entry, complete, walkover/retirement and completed-result correction forms when allowed |
+| `/rankings` | World/Local tabs, source/as-of/local label, tied positions and stale banner; admin `Edit snapshot` opens full bounded editor with add/remove player rows, position and publication metadata |
+| `/players` | Admin search/select/create player; master-name edit, fresh-proof `Erase personal data` action with consequences; no public directory |
+| `/catalog`, `/menu` | Admin item cards/table, active filter, create/edit/retire; catalog stock and `Adjust stock` with reason |
+| `/tournaments/:id/commerce` | Admin merchandise sale form, beer order creation and open queue, sales history and reports; explicit selected tournament/context and currency |
+| `/orders/:id` | Admin fixed lines, display number/time/state/total; open-only complete/cancel; terminal outcome and retry/reconciliation feedback |
+| `/signin`, `/enroll` | Passkey sign-in; enrollment invitation pasted into a field, display-name notice from invitation, credential label, native/browser ceremony, optional second-device encouragement |
+| `/account` | Own credential labels/times, Add passkey, Rename, Remove, Sign out; expired/revoked session notice |
+| `/accounts` | Admin list/status, invite (show token once with copy button), revoke/disable/account erasure with fresh passkey proof and reason; last-admin guard explanation |
 
-Apply these conventions only where an interaction is supported by resolved requirements. They do not authorize new workflows.
+No unsupported workflow is added by this screen inventory. Native screen names map to these paths but do not register custom deep-link handlers. Header/footer includes operator privacy notice and security contact from the public deployment projection. Account-free players have no profile/login screen.
 
-- **Buttons:** Clear action labels; one visually dominant action per action group when applicable. Primary: `primary` fill with `surface` text. Secondary: `surface` fill with `primary` text and boundary. Use 4 CSS pixel corner radii and a default 44 × 44 CSS pixel minimum target. Explain unavailability in nearby text when needed; do not rely on faded text alone.
-- **Inputs:** Persistent visible labels, helper text before entry, and an explicit required/optional indicator when the rule is known. Use `surface` interiors, `text` content, and `secondary` boundaries. Do not invent fields or validation rules. Placeholders never replace labels.
-- **Links:** Underlined `primary` text with descriptive wording. Preserve a visible distinction from surrounding text without relying on color. Distinguish navigation from action controls consistently.
-- **Focus:** Use a 2 CSS pixel `primary` outline separated by a 2 CSS pixel `surface` gap. Keep it visible on all sides, including within scrolling regions. Never remove focus indication or obscure the focused control.
-- **Feedback:** Explain errors in text next to the relevant field, associate messages with that field, and preserve entered values. For multiple errors, provide a summary linking to affected fields. Announce relevant feedback without unexpectedly moving focus. Use success messages only after confirmed completion.
-- **Data presentation:** Keep player names and scores unambiguously associated. Use meaningful table headers for comparable data. Represent unavailable values explicitly when that state is supported; never substitute zero. Empty-state wording and recovery actions depend on resolved requirements.
+## Tournament and score presentation
 
-## Accessibility
+Roster editor shows count `N of 8 players`, required source and seed helper `1 is strongest; use each number once`. Do not label seeds as actual external ranking positions. Existing names plus shortUUID suffix disambiguate choices; an admin explicitly chooses existing versus new identity. Show required public-name attestation at roster assignment under SECURITY, warning that names are public immediately, including drafts. Seed swaps save the full roster atomically. Locked fields show why and remain readable. Generate/replace confirmation states that replacement resets schedules; start summarizes eight assigned players and current plan.
 
-- Target conformance: WCAG 2.2 AA. Verify complete implemented workflows, not just individual components.
-- Require at least 4.5:1 text contrast, or 3:1 for large text: at least 24 CSS pixels regular or approximately 18.7 CSS pixels bold. Required control boundaries, meaningful graphics, and focus indicators must meet 3:1 against adjacent colors.
-- Make every interaction keyboard-operable, with logical focus order, visible focus, and no keyboard traps. Focus must not be hidden by other content.
-- Provide programmatic names, roles, states, labels, and heading structure. Expose data relationships to assistive technology. Do not use color, shape, or position as the sole instruction or status cue.
-- Support 200% text resizing, reflow at 320 CSS pixels, and user text-spacing overrides without lost information or controls.
-- Default to 44 × 44 CSS pixel interaction targets; meet WCAG's 24 × 24 CSS pixel minimum or its applicable spacing exceptions in compact layouts.
-- Avoid nonessential motion. Respect reduced-motion preferences by removing decorative animation and smooth movement. If dynamic score updates are later required, avoid focus movement and excessive announcements; announcement behavior remains TO BE DECIDED.
+Match plan uses three labeled round sections, four/two/one match cards in canonical QF1/QF2/QF3/QF4/SF1/SF2/F order, collapsing to a vertical list on small screens. Connector lines are optional decoration and never the sole representation of progression. Each card includes exact feeder labels until players are known, court and local planned time/duration or `Not scheduled`, status and a match link. Schedule errors identify the conflicting court/player/match; uncertain future-player overlap is a warning. Date/time forms show tournament time zone and explicit UTC offset where needed; ambiguous local choices offer both valid offsets, nonexistent times reject without silent shifting.
+
+Scoreboard groups all matches by round. Display two named competitor rows per match with set columns and winner/status words; do not use color alone. Editing exposes game fields per ordered set and tie-break fields only at 7–6. `Save score` and `Complete match` are distinct actions. Walkover/retirement require unavailable player plus internal reason; public views show the outcome label but never the reason. Result-correction form displays existing result, corrected result and downstream-change impact before save; a blocked change explains `A later match has already started`. Statistics shows participant, played, wins, losses and win percentage; unavailable percentage is an em dash with accessible label `No completed matches`.
+
+Rankings show scope/source/as-of visibly above ordered rows. Ties use `Tied` text; missing is `Unranked`, empty snapshot `No rankings published`, stale `Out of date`. Source labels are inert text, not links or a claim of official status. Snapshot editor identifies duplicates and preserves draft values on conflict.
+
+## Commerce presentation
+
+Always show selected tournament, currency code, quantity and per-unit/line/total amounts. No payment-card fields, checkout/payment success wording, refund button or implied tax calculation. Sale button is `Record sale`; order completion is `Record completed order`. Confirmation means the record committed, not that money was collected. Catalog/menu edit helpers explain that prior snapshots remain unchanged. Stock adjustments show current stock, signed change, resulting stock and required reason; reject zero/range errors inline.
+
+Order editor permits 1–50 distinct items, fixed lines after create, one currency. Open queue oldest-first shows display number/time/total plus Open link; completion/cancellation actions belong to the order detail. Reports show time filter (or All time), inclusive/exclusive boundary helper, currency-separated totals and merchandise item quantities. Terminal sale mistake guidance says `Recorded sales cannot be reversed here. Reconcile the mistake outside the app.` Never claim a timed-out write failed; use the shared outcome-unknown state.
+
+## Components and feedback
+
+Buttons use explicit action labels,4px radius,44×44 minimum target on both platforms, primary fill/secondary outline. Inputs have persistent labels, required/optional wording, helper text, appropriate native keyboard and associated errors; placeholders are examples only. Links are underlined primary text. Web focus is2px primary outline plus2px surface gap, fully visible. Native uses platform focus indicators and accessibility labels/roles/states; do not replace native text entry with gesture-only widgets. Destructive actions (delete, cancel, archive, retire, erasure, credential removal, grant revoke/disable) show a named confirmation dialog describing the exact effect and Cancel default; a confirmation does not create an extra server approval requirement.
+
+| State | Presentation / action |
+| --- | --- |
+| Initial loading | `Loading…` status and noninteractive skeleton, no fabricated scores/zero totals |
+| Empty | Explain entity-specific absence: `No tournaments yet`, `No players assigned`, `Generate the match plan`, `No rankings published`, `No open orders`, `No recorded sales`; show only permitted next action |
+| Incomplete match | `Not started`, feeder labels, or `In progress — no score yet` per REQUIREMENTS |
+| Read failure | Last data + Connection lost/Last updated; initial failure has Retry; never silently replace data with empty rows |
+| Stale | Tournament data older than 15s after failure labeled Stale; rankings >30days use Out of date |
+| Pending mutation | Preserve form, disable duplicate submit, `Saving…`; success only on committed acknowledgement |
+| Unknown outcome | `Outcome unknown — checking`; look up/retry same reference, manual `Check again`, no new mutation reference |
+| Version conflict | Preserve entered fields, explain another admin changed data, `Reload latest`; do not automatically resubmit against a newer version |
+| Offline | Explicit banner; loaded data read-only and stale, mutations disabled, no queued writes |
+| Auth cancelled/unsupported/lost | Neutral cancellation retry, supported-device guidance, optional second-device advice; lost-all-passkeys explains new-account contact process under SECURITY |
+
+Web uses polite live regions for save/status/score updates, assertive only blocking form errors; native uses accessibility announcements with the same messages. Coalesce polled score changes into at most one announcement every 5s, identify changed match/result, never reread the entire scoreboard or steal focus. Loading/polling does not shift keyboard focus. Error summary links to individual fields; first submit error focuses summary, asynchronous updates preserve focus. Dirty form navigation uses Continue editing/Discard changes. Modals have named heading, focus containment, Escape/back cancellation and return focus. Motion is limited to immediate state changes; honor reduced-motion without essential animation.
+
+## Formatting and accessibility
+
+English LTR UI. Use Intl with en-GB for dates/numbers, display tournament local date/time using24-hour time plus zone abbreviation/UTC offset; as-of ranking dates are calendar dates, not time-zone converted. Money always shows currency code and two decimal digits (for example EUR12.50); parse typed prices as decimal text into integer minor units, never binary floating-point arithmetic. Percentages show one decimal; use words/screen-reader labels for empty values.
+
+DES-01 MUST meet WCAG2.2AA for complete supported web workflows and equivalent native accessibility outcomes:4.5:1 ordinary text,3:1 large text/meaningful nontext boundaries, keyboard operation, no traps, unobscured focus, programmatic names/roles/states, correct headings/table associations, text scaling/reflow, no color-only information, visible error/recovery feedback and accessible authentication. Passkeys must not require memorization/puzzles. Target44px controls exceeds the minimum touch-target baseline. Accessibility evidence includes automated axe-core checks in browser tests (versions pinned in ARCHITECTURE), keyboard/manual320px+200%/400% zoom, VoiceOver/Safari, NVDA/Firefox, VoiceOver/iOS and TalkBack/Android, largest supported native text setting, contrast measurements and reduced-motion checks. Each feature includes its own accessibility cases; automated scans alone do not establish conformance. [WCAG2.2](https://www.w3.org/TR/WCAG22/) is the normative web standard; actual device/browser versions are captured at release.
+
+## Resolved design questions
+
+D01–D09: existing name/tagline/mark approved; neutral palette/system fonts final; light-only;320–1920px/points and native mapping; explicit public/admin navigation; seeded round/score/statistics layouts; catalog/orders/reports; English formatting; all loading/empty/stale/error/pending/unknown/auth states above. No separate dark assets, exports or unapproved dashboard behavior.
 
 ## Open Questions
 
-- **OQ-1 — TO BE DECIDED:** Formal approval of current name/tagline and need for a wordmark.
-- **OQ-2 — TO BE DECIDED:** Brand personality and approved assets/colors to replace the neutral defaults.
-- **OQ-3 — TO BE DECIDED:** Viewing conditions, essential display sizes and platform-specific design mappings, using [selected platforms](ARCHITECTURE.md#selected-technologies).
-- **OQ-4 — TO BE DECIDED:** Light mode alone or dark mode support.
-- **OQ-5 — TO BE DECIDED:** Navigation/editable/read-only presentation of [supported workflows](REQUIREMENTS.md) under [resolved grants](SECURITY.md#access-and-disclosure-policy); permissions are not decided here.
-- **OQ-6 — TO BE DECIDED:** Information hierarchy/layout for tournament format, plan fields, score detail and rankings as their remaining [product questions](REQUIREMENTS.md#open-questions) resolve; statistics behavior is FR-5.1.
-- **OQ-7 — TO BE DECIDED:** Interface layouts for the now-defined [merchandising](REQUIREMENTS.md#merchandising) and [beer garden](REQUIREMENTS.md#beer-garden) workflows.
-- **OQ-8 — TO BE DECIDED:** Languages, writing directions and name-display conventions.
-- **OQ-9 — TO BE DECIDED:** Feedback/announcement presentation for updates and unavailable data under [product semantics](REQUIREMENTS.md#open-questions); do not invent refresh frequencies here.
+None for coding. Preserve owner constraints when adapting layouts to each platform.

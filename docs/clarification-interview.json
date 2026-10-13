@@ -1,0 +1,1167 @@
+{
+  "purpose": "Preserve the interview and trace closure of every identified specification decision; owner documents remain authoritative.",
+  "audit_date": "2026-10-13",
+  "audit_commit": "5f1aa04",
+  "scanned_files": [
+    "AGENTS.md",
+    "ARCHITECTURE.md",
+    "DESIGN.md",
+    "README.md",
+    "REQUIREMENTS.md",
+    "REQUIREMENT_TEMPLATE.md",
+    "SECURITY.md",
+    "docs/assets/readme-logo.svg",
+    "logo.svg"
+  ],
+  "interpretation": [
+    "This is a tracking index, not a source of product, design, architecture or security policy.",
+    "Each topic contains several possible follow-up decisions; ask about only one decision at a time.",
+    "Write confirmed decisions and their acceptance criteria into the affected owner document, preserving source provenance and updating dependent references.",
+    "Do not silently approve assumptions or reopen decisions already settled by the specifications.",
+    "Additional gaps listed here are questions to evaluate, not requirements or authorization to add features.",
+    "Intentional template placeholders, explanations of uncertainty labels, runtime unresolved-outcome states and hypothetical threat scenarios are not missing product decisions.",
+    "Missing historical facts must remain truthful; establish current decisions separately rather than inventing history.",
+    "A topic is resolved only when its applicable subdecisions are settled, explicitly excluded or superseded and the owner documents agree.",
+    "Recheck the complete repository for gaps and contradictions as answers introduce or remove dependencies; the initial topic list is not a claim of exhaustive build readiness.",
+    "Specification review does not establish implementation, security effectiveness, compliance or release readiness."
+  ],
+  "active_question": null,
+  "completed_questions": [
+    {
+      "id": "Q001",
+      "topic": "P02",
+      "text": "In the first version, what kind of tennis matches should the app support?",
+      "answer": "a",
+      "selected_option": "Singles: one player against one player.",
+      "answered_on": "2026-10-13",
+      "decision_refs": [
+        "REQUIREMENTS.md:OQ-2",
+        "REQUIREMENTS.md:FR-2.1",
+        "REQUIREMENTS.md:FR-2.2",
+        "REQUIREMENTS.md:FR-3.2"
+      ]
+    },
+    {
+      "id": "Q002",
+      "topic": "P01",
+      "text": "How should the eight-player tournament work?",
+      "answer": "b",
+      "selected_option": "Knockout: lose a match and you are out; the last player wins.",
+      "answered_on": "2026-10-13",
+      "decision_refs": [
+        "REQUIREMENTS.md:OQ-1",
+        "REQUIREMENTS.md:FR-2.2"
+      ]
+    },
+    {
+      "id": "Q003",
+      "topic": "P08",
+      "text": "How should we choose who plays whom in the first round?",
+      "answer": "c",
+      "selected_option": "Use rankings: keep the strongest players apart in the first round.",
+      "answered_on": "2026-10-13",
+      "decision_refs": [
+        "REQUIREMENTS.md:OQ-8",
+        "REQUIREMENTS.md:FR-2.2"
+      ]
+    },
+    {
+      "id": "Q004",
+      "topic": "P08",
+      "text": "Where should the rankings used to pick the pairs come from?",
+      "answer": "b",
+      "selected_option": "A ranking list from outside the app, such as a club or tennis organization.",
+      "answered_on": "2026-10-13",
+      "decision_refs": [
+        "REQUIREMENTS.md:OQ-8",
+        "REQUIREMENTS.md:FR-2.2",
+        "REQUIREMENTS.md:OQ-17"
+      ]
+    },
+    {
+      "id": "Q005",
+      "topic": "P08",
+      "text": "Which ranking list should we use?",
+      "answer": "Im not sure, lets just let the orgnaizer decide",
+      "answered_on": "2026-10-13",
+      "decision_refs": [
+        "REQUIREMENTS.md:OQ-8",
+        "REQUIREMENTS.md:FR-2.2",
+        "SECURITY.md:SEC-ACCESS-02"
+      ]
+    },
+    {
+      "id": "Q006",
+      "topic": "P08",
+      "text": "How should the organizer put those rankings into the app?",
+      "answer": "a",
+      "selected_option": "Type them in: enter a rank for each of the eight players.",
+      "answered_on": "2026-10-13",
+      "decision_refs": [
+        "REQUIREMENTS.md:OQ-8",
+        "REQUIREMENTS.md:FR-2.2",
+        "REQUIREMENTS.md:OQ-17"
+      ]
+    },
+    {
+      "id": "Q007",
+      "topic": "P08",
+      "text": "Which numbers should the organizer enter?",
+      "options": [
+        "The players' actual positions on the outside ranking list, such as 42, 105 or 280.",
+        "Just 1 through 8, ordering these eight players from strongest to weakest using the chosen list."
+      ],
+      "answer": "b",
+      "selected_option": "Just 1 through 8, ordering these eight players from strongest to weakest using the chosen list.",
+      "answered_on": "2026-10-13",
+      "decision_refs": [
+        "REQUIREMENTS.md#tournament-and-participant-records",
+        "REQUIREMENTS.md#matches-and-match-plan"
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "id": "P01",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-1",
+      "status": "resolved",
+      "decisions": [
+        "Tournament format",
+        "Number of meetings between opponents",
+        "Tournament winner and tied standings",
+        "Any group stages, advancement or placement games"
+      ],
+      "resolution_ref": "REQUIREMENTS.md:OQ-1",
+      "excluded_follow_ups": [
+        "Round-robin repeats and tied group standings",
+        "Group stages",
+        "Third-place and consolation matches"
+      ],
+      "dependent_topics": [
+        "P08: first-round pairings and winner-advancement mechanism",
+        "P09: corrections affecting later rounds",
+        "P10: withdrawals and exceptional completion",
+        "P18: later rounds before players are known"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Eight-player single elimination, seven matches, one meeting per pairing, final champion; no groups, placement games or ties.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#matches-and-match-plan"
+      ],
+      "resolution_basis": "Explicit interview answer plus delegated detail defaults"
+    },
+    {
+      "id": "P02",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-2",
+      "status": "resolved",
+      "decisions": [
+        "Singles, doubles or both at launch",
+        "If both, whether one tournament can mix match types",
+        "If doubles, team assignment and whether partners stay together"
+      ],
+      "resolution_ref": "REQUIREMENTS.md:OQ-2",
+      "excluded_follow_ups": [
+        "Mixed match types",
+        "Doubles team assignment",
+        "Doubles partner changes"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Singles only; doubles and team assignment excluded.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#launch-scope"
+      ],
+      "resolution_basis": "Explicit interview answer plus delegated detail defaults"
+    },
+    {
+      "id": "P03",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-3; FR-1.3",
+      "status": "resolved",
+      "decisions": [
+        "Required and optional tournament fields",
+        "Field defaults and validation",
+        "Dates, time zones and locations",
+        "Which additional fields need a disclosure decision in SECURITY.md"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Bounded name/venue/source, UUID/version/state, UTC instants and IANA zone, optional dates and one-to-eight courts; public fields explicitly allowlisted by SECURITY.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#tournament-and-participant-records"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P04",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-4; FR-1.1",
+      "status": "resolved",
+      "decisions": [
+        "Maximum draft size, including saving a complete eight-player draft",
+        "Participant removal and replacement before play",
+        "Participant changes after play starts",
+        "Tournament states and allowed transitions",
+        "Completion, cancellation, reopening, archival and deletion behavior"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Zero-to-eight draft roster; start locks roster/seeds/bracket; explicit completion/cancellation/archive/draft-delete transitions and commerce guards; no reopen or substitutions.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#tournament-and-participant-records"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P05",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-5; FR-1.2",
+      "status": "resolved",
+      "decisions": [
+        "Name entry, length, whitespace, character handling and corrections",
+        "Duplicate names and visible disambiguation",
+        "Participant identity across tournaments",
+        "Effect of name corrections on historical results"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "NFC trimmed bounded names, duplicate names allowed with UUID disambiguation; global player IDs and independent per-tournament snapshots; privacy erasure overrides display retention.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#tournament-and-participant-records"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P08",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-8; FR-2.1/2.2",
+      "status": "resolved",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#matches-and-match-plan"
+      ],
+      "excluded_follow_ups": [
+        "Selecting one mandatory ranking organization/list for the entire project",
+        "Spreadsheet import and automatic retrieval of launch seeding rankings",
+        "Automatic matching of external ranking records to participants for seeding"
+      ],
+      "decisions": [
+        "How the organizer identifies/selects the ranking list and any supported-list limits",
+        "Outside-list positions versus relative seed positions; value limits and validation",
+        "Exact seed placement and number of protected top players",
+        "Tied or missing rankings",
+        "When rankings are captured for the draw",
+        "Redraws and overrides",
+        "Manual, generated or imported plans",
+        "Winner-advancement mechanism and fixed later-round pairings versus reseeding",
+        "Required schedule fields",
+        "Court count and allocation",
+        "Simultaneous play and scheduling conflicts",
+        "Plan completeness before play starts"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Organizer names an external source and manually assigns unique relative1–8 order, resolves missing/tied source ranks; fixed bracket and atomic advancement; draft-only regeneration; optional bounded court/time/duration with known-conflict guards.",
+      "resolution_basis": "Explicit interview answer plus delegated detail defaults"
+    },
+    {
+      "id": "P09",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-9; FR-2.2/3.2",
+      "status": "resolved",
+      "decisions": [
+        "Plan edits after scheduling or starting",
+        "Editing a match with recorded scores",
+        "Effect of corrections on later matches and standings",
+        "Conflicting edits by multiple admins",
+        "Edit-history presentation, if any, subject to security disclosure policy"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Versioned mutations; draft redraw clears schedule; no roster edits after start; same-winner correction preserves downstream and changed-winner rejects started descendants; audit is operator-only.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#scoring-and-corrections"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P10",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-10; FR-3.1/3.2",
+      "status": "resolved",
+      "decisions": [
+        "Points, games, sets and match-winning rules",
+        "Tiebreak and deuce rules",
+        "Score-entry detail and granularity",
+        "Match start, pause, completion and correction",
+        "No-shows, withdrawals, retirement and abandoned matches",
+        "Scoreboard coverage and displayed detail",
+        "Tournament start conditions beyond participant count"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Best-of-three tie-break sets, advantage games on court, game/set entry only; explicit start/complete/walkover/retirement/correction, no pause state or timer; abandoned remaining play uses cancellation.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#scoring-and-corrections"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P11",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-11; FR-3.2",
+      "status": "resolved",
+      "decisions": [
+        "Valid and impossible scores for the chosen format",
+        "Observable rejection and correction behavior",
+        "Score freshness and update latency"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Bounded set/tie-break validator, no extra sets after two wins, rejected data preserved; five-second foreground polling and seven-second healthy visibility target.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#scoring-and-corrections"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P13",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-13; FR-4.1/4.2",
+      "status": "resolved",
+      "decisions": [
+        "What world ranking means",
+        "What local ranking means",
+        "Ranked entities",
+        "Local geographic or organizational boundary",
+        "Ranking fields and representation"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "World/local are separately entered snapshots, player UUID entries, local deployment label, source/as-of and display fields; no claim of official world authority.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#world-and-local-rankings"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P14",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-14; FR-4.1/4.2",
+      "status": "resolved",
+      "decisions": [
+        "Calculated, entered or imported rankings",
+        "Source authority and ranking-edit grants in SECURITY.md",
+        "Formula and eligibility",
+        "Tie-breaking",
+        "Refresh timing and historical windows",
+        "Identity matching and correction propagation"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Admin whole-snapshot replacement, exact rank/entry bounds, ties sorted by name/UUID,30-day stale label, no automatic formula/import/history; player identity is never matched by name.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#world-and-local-rankings"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P17",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-17",
+      "status": "resolved",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#launch-scope"
+      ],
+      "decisions": [
+        "Required external integrations or explicit absence",
+        "Exchanged data and authoritative source",
+        "Triggers",
+        "Timeouts, retries, unavailable data and recovery behavior"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "No business-data integrations or automatic ranking fetch. Only selected cloud/platform operational dependencies; bounded timeout/retry/uncertain-outcome contracts in ARCHITECTURE.",
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P18",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-18",
+      "status": "resolved",
+      "decisions": [
+        "Missing versus not-yet-entered scores",
+        "Empty and incomplete plans",
+        "Whether and how later knockout rounds appear before their players are known",
+        "Missing, stale and unavailable rankings",
+        "Network and server failure recovery",
+        "Preservation of unsaved input"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Explicit empty/incomplete/future-winner/unavailable/stale states; keep last permitted data and in-memory draft input; bounded retries and same-reference uncertain-write reconciliation.",
+      "resolved_decision_refs": [
+        "DESIGN.md#components-and-feedback"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P19",
+      "owner": "REQUIREMENTS.md",
+      "source": "OQ-19",
+      "status": "resolved",
+      "decisions": [
+        "Concurrent users and active tournaments",
+        "Data volumes and retention dependencies",
+        "Measurable response-time targets",
+        "Availability target",
+        "Permitted data loss and restore time",
+        "Offline behavior",
+        "Background or scheduled work"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "250 public/25 admin/10 active target, documented history fixture and percentile thresholds;99.5% availability,RPO5min/RTO60min; no offline writes; elected bounded maintenance worker.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#capacity-and-operations-acceptance"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P20",
+      "owner": "REQUIREMENTS.md",
+      "source": "FR-6 through FR-8; gaps not separately registered",
+      "status": "resolved",
+      "decisions": [
+        "Supported currencies and precision",
+        "Meaning of entered prices and totals, including tax handling",
+        "Catalog, stock, menu and sales scope across tournaments or venues",
+        "Item availability, archiving and zero-price use",
+        "Quantity, price and line-count limits",
+        "Time range and grouping of sales reports",
+        "Beer-garden order identification and ordering",
+        "Correction of accidentally recorded final sales within the existing no-reversal launch scope",
+        "Creation retries for orders and other records"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Shared deployment catalog/menu; tournament sales/orders; EUR/USD integer precision, final prices/no tax calculation, zero-price allowed, exact quantities/stock/lines, immutable snapshots/terminal history, idempotency and currency-separated reports.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#merchandise-beer-garden-and-money"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P21",
+      "owner": "REQUIREMENTS.md",
+      "source": "FR-5.1; implications of OQ-10",
+      "status": "resolved",
+      "decisions": [
+        "Statistics treatment of withdrawals, forfeits and replaced players under the eventual match rules"
+      ],
+      "excluded_follow_ups": [
+        "Doubles statistics identity: outside launch scope under REQUIREMENTS.md:OQ-2"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Normal/walkover/retirement completed outcomes count once; no cancelled/in-progress contribution; recompute current results on reads, half-up percentage, no substitutions.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#tournament-statistics"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "P22",
+      "owner": "REQUIREMENTS.md",
+      "source": "Required Requirement Inputs; missing discovery and launch detail",
+      "status": "resolved",
+      "decisions": [
+        "Single club or multiple independent organizers",
+        "Tournament discovery, list ordering and history",
+        "Search and filtering needs or explicit exclusion",
+        "Web and mobile launch capability allocation",
+        "Export, printing and notifications needs or explicit exclusion",
+        "Launch scale, budget and deadline constraints if any"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "One operator deployment, public cursor discovery/name-prefix/state filters, admin-only player search, full web/iOS/Android parity; ordinary print/share only, no export/push;USD500 planning cap and no deadline.",
+      "resolved_decision_refs": [
+        "REQUIREMENTS.md#launch-scope"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "D01",
+      "owner": "DESIGN.md",
+      "source": "OQ-1; Brand and Logo",
+      "status": "resolved",
+      "decisions": [
+        "Approval of Aces & Ale name",
+        "Approval of current tagline",
+        "Approval of existing mark",
+        "Need for a wordmark"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Existing Aces & Ale name, tagline and mark approved now; no new wordmark/mascot.",
+      "resolved_decision_refs": [
+        "DESIGN.md#brand-and-logo"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "D02",
+      "owner": "DESIGN.md",
+      "source": "OQ-2; Required Design Inputs; Typography",
+      "status": "resolved",
+      "decisions": [
+        "Brand personality",
+        "Final colors",
+        "Typography",
+        "Any additional existing or required assets",
+        "Whether neutral defaults become final choices"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Calm/practical identity, neutral palette final, platform system fonts, existing assets only.",
+      "resolved_decision_refs": [
+        "DESIGN.md#color-palette"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "D03",
+      "owner": "DESIGN.md",
+      "source": "OQ-3",
+      "status": "resolved",
+      "decisions": [
+        "Indoor and outdoor viewing conditions",
+        "Phone, tablet, desktop and large-display needs",
+        "Essential screen sizes",
+        "Native platform mappings and accessibility verification"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Phone/tablet/desktop/ordinary large browsers320–1920px, outdoor readability checks; native logical-point/font-scaling mapping and real assistive-technology checks.",
+      "resolved_decision_refs": [
+        "DESIGN.md#layout-and-spacing"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "D04",
+      "owner": "DESIGN.md",
+      "source": "OQ-4; Brand and Logo",
+      "status": "resolved",
+      "decisions": [
+        "Light-only or dark-mode support",
+        "Mode selection behavior if supported",
+        "Dark-background logo treatment if needed"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Light mode only regardless of OS theme; no toggle or dark-background logo usage.",
+      "resolved_decision_refs": [
+        "DESIGN.md#color-palette"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "D05",
+      "owner": "DESIGN.md",
+      "source": "OQ-5",
+      "status": "resolved",
+      "decisions": [
+        "Navigation and landing screen",
+        "Public and admin presentation of supported workflows",
+        "Editable and read-only states",
+        "Registration and account-management presentation after security decisions"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Public tournament landing and rankings; explicit admin/player/catalog/menu/accounts/account navigation with state/permission-aware controls; defined enrollment/lifecycle screens.",
+      "resolved_decision_refs": [
+        "DESIGN.md#navigation-and-screens"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "D06",
+      "owner": "DESIGN.md",
+      "source": "OQ-6; Layout and Spacing",
+      "status": "resolved",
+      "decisions": [
+        "Tournament and match-plan layouts",
+        "Scoreboard and score-entry layouts",
+        "Statistics and ranking hierarchy"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Three round groups/four-two-one match cards, feeder labels, named score rows, separate save/complete, guard-aware correction; separate stats/ranking metadata.",
+      "resolved_decision_refs": [
+        "DESIGN.md#tournament-and-score-presentation"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "D07",
+      "owner": "DESIGN.md",
+      "source": "OQ-7",
+      "status": "resolved",
+      "decisions": [
+        "Merchandise catalog, stock and sale presentation",
+        "Beer-garden menu and order presentation",
+        "Sales-report presentation"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Catalog/menu/stock forms, single-item sale, fixed order lines, oldest-first open queue, immutable terminal states, selected-tournament/currency-separated reporting.",
+      "resolved_decision_refs": [
+        "DESIGN.md#commerce-presentation"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "D08",
+      "owner": "DESIGN.md",
+      "source": "OQ-8",
+      "status": "resolved",
+      "decisions": [
+        "Interface languages",
+        "Writing directions",
+        "Name-display conventions",
+        "Date, time, number and currency presentation"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "English LTR,en-GB dates/numbers,24-hour tournament-zone times, ISO currency code/two decimals, full wrapped names and duplicate suffixes.",
+      "resolved_decision_refs": [
+        "DESIGN.md#formatting-and-accessibility"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "D09",
+      "owner": "DESIGN.md",
+      "source": "OQ-9; Accessibility; Components",
+      "status": "resolved",
+      "decisions": [
+        "Loading, empty, stale, error and retry presentation",
+        "Dynamic update announcements",
+        "Pending and unresolved mutation presentation",
+        "Unsupported-device and lost-device experience under security policy"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Explicit loading/empty/stale/error/offline/pending/unknown/auth states, no false success; coalesced polite announcements, stable focus, dirty-input preservation and supported-device guidance.",
+      "resolved_decision_refs": [
+        "DESIGN.md#components-and-feedback"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "A01",
+      "owner": "ARCHITECTURE.md",
+      "source": "Selected Technologies",
+      "status": "resolved",
+      "decisions": [
+        "Supported browsers and operating systems",
+        "React minor version",
+        "React Native version",
+        "Node runtime version",
+        "Postgres version",
+        "Implementation language",
+        "Current rationale for selected technologies; preserve unavailable historical rationale"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Exact compatible Node24/TS6/Postgres17/web React19.3 and Expo57/native React19.2/RN0.86 pins; browser-last-two/iOS17/Android10 floor. Current rationale recorded separately from unavailable historical rationale.",
+      "resolved_decision_refs": [
+        "ARCHITECTURE.md#selected-technologies"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "A02",
+      "owner": "ARCHITECTURE.md",
+      "source": "Browser client; Frontend Adaptation",
+      "status": "resolved",
+      "decisions": [
+        "Rendering strategy",
+        "Build tooling",
+        "Routing",
+        "UI libraries",
+        "State and request management",
+        "Refresh delivery",
+        "Storage and caching",
+        "Shared tokens and code packaging"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Client-rendered Vite React SPA, CSS Modules, router/React Query memory state, polling, no persistent API cache; share contracts/domain/tokens only.",
+      "resolved_decision_refs": [
+        "ARCHITECTURE.md#components-and-boundaries"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "A03",
+      "owner": "ARCHITECTURE.md",
+      "source": "Mobile client; Frontend Adaptation",
+      "status": "resolved",
+      "decisions": [
+        "Navigation",
+        "Native build and distribution tooling",
+        "Native dependencies and capabilities",
+        "Code sharing",
+        "Local storage and caching",
+        "Offline mechanisms if required",
+        "Platform adapters and verification tools"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Expo Router/development native builds, pinned passkey/SecureStore modules, native UI/platform tests and store distribution; no offline queue/additional device capabilities.",
+      "resolved_decision_refs": [
+        "ARCHITECTURE.md#components-and-boundaries"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "A04",
+      "owner": "ARCHITECTURE.md",
+      "source": "Provisional Components and Boundaries; Domain Allocation",
+      "status": "resolved",
+      "decisions": [
+        "Adoption or revision of proposed logical responsibilities",
+        "Internal modules and domain allocation",
+        "Deployment units",
+        "Identity/session allocation",
+        "Statistics and ranking calculation or materialization"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Approved API/domain/identity/persistence/worker boundaries; API and worker deployment units; derived-on-read stats and stored ranking snapshots.",
+      "resolved_decision_refs": [
+        "ARCHITECTURE.md#components-and-boundaries"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "A05",
+      "owner": "ARCHITECTURE.md",
+      "source": "Read and Mutation Interfaces; Server-side application/API",
+      "status": "resolved",
+      "decisions": [
+        "Server framework",
+        "API style, protocol and serialization",
+        "Operation and field contracts",
+        "Identifier generation",
+        "Missing, partial and error outcomes",
+        "Pagination and ordering where required",
+        "Transactions and concurrency",
+        "Idempotency and uncertain-outcome lookup",
+        "Retry and interruption recovery"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Fastify HTTPS/JSON, UUID/version/date/money contracts, closed read/command catalogs, safe errors, signed cursor ordering, transactional replay and bounded retry/outcome lookup.",
+      "resolved_decision_refs": [
+        "ARCHITECTURE.md#interface-conventions"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "A06",
+      "owner": "ARCHITECTURE.md",
+      "source": "Data persistence; Domain Allocation",
+      "status": "resolved",
+      "decisions": [
+        "Data-access tooling",
+        "Physical schema, keys and relationships",
+        "Indexes and constraints",
+        "Migration tooling",
+        "Transaction boundaries",
+        "Recovery mechanism"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "pg with checksummed ordered SQL, explicit tables/keys/indexes/foreign keys, aggregate locks and versions, immutable snapshots, financial/privacy tombstones and consistent read transactions.",
+      "resolved_decision_refs": [
+        "ARCHITECTURE.md#persistence-and-concurrency"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "A07",
+      "owner": "ARCHITECTURE.md",
+      "source": "Identity Interface",
+      "status": "resolved",
+      "decisions": [
+        "Verifier library or identity service",
+        "Platform integration",
+        "Account, credential and session storage",
+        "Bootstrap and recovery implementation after security policy is settled"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "SimpleWebAuthn plus platform adapters; account/credential/challenge/invitation/session schema and explicit bootstrap/new-account break-glass; no external identity vendor.",
+      "resolved_decision_refs": [
+        "ARCHITECTURE.md#identity-interfaces"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "A08",
+      "owner": "ARCHITECTURE.md",
+      "source": "Remaining Architecture Decisions",
+      "status": "resolved",
+      "decisions": [
+        "External adapters if integrations are required",
+        "Workers or scheduled processing if required",
+        "Hosting provider and region",
+        "Domains and deployment topology",
+        "TLS termination and network boundaries",
+        "Native associations",
+        "Operational access",
+        "Release and rollback mechanisms",
+        "Capacity, availability and recovery implementation"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "AWSus-east-1 Fargate/ALB/private Multi-AZ RDS, worker/S3/KMS/CloudWatch, separate workload/operator authority, required real domain/signing inputs, rolling deploy/rollback and isolated restore.",
+      "resolved_decision_refs": [
+        "ARCHITECTURE.md#deployment-and-operational-topology"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S01",
+      "owner": "SECURITY.md",
+      "source": "SQ-1; SEC-AUTH-03",
+      "status": "resolved",
+      "decisions": [
+        "Explicit adoption of proposed passkey verification policy",
+        "RP ID and exact origins",
+        "Native associations",
+        "Supported authenticators",
+        "User verification and attestation policy",
+        "Challenge expiry, limits and binding",
+        "Verifier and credential schema security obligations"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Verification proposals explicitly adopted: exact origins/RP/native associations, UV/resident required, attestation none,32-byte five-minute single-use challenges, maintained verifier and bounded counter/replay rules.",
+      "resolved_decision_refs": [
+        "SECURITY.md#authentication-and-credential-lifecycle"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S02",
+      "owner": "SECURITY.md",
+      "source": "SQ-2; SEC-AUTH-02/04; SEC-ACCESS-02",
+      "status": "resolved",
+      "decisions": [
+        "Who may register",
+        "First-admin authority and provisioning",
+        "Who may grant or revoke admin privileges",
+        "Account-player relationship",
+        "Multiple actor categories",
+        "Account and credential record access",
+        "Adoption of proposed credential-lifecycle controls",
+        "Recent-authentication freshness",
+        "Credential addition, removal and revocation",
+        "Last-credential safeguards",
+        "All-devices-lost recovery",
+        "Two-device encouragement and tracking",
+        "Unsupported devices and account disablement"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Invited admins only, explicit operator bootstrap/new-account break-glass, account separate from player, fresh proof5min, max10 credentials/last-key guard, optional second device, no old-account recovery.",
+      "resolved_decision_refs": [
+        "SECURITY.md#authentication-and-credential-lifecycle"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S03",
+      "owner": "SECURITY.md",
+      "source": "SQ-3; SEC-ACCESS-01/02; SEC-INPUT-01",
+      "status": "resolved",
+      "decisions": [
+        "Field/action/object grants for newly resolved scope",
+        "Public projection schemas",
+        "Ranking source and edit authority",
+        "Input and response validation bounds",
+        "Safe rejection and failure-disclosure contracts"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Explicit action/object/field grants for public/admin/own-account/operator/workloads, closed public DTOs, no commerce/audit disclosure or client authority; deterministic rejection shapes.",
+      "resolved_decision_refs": [
+        "SECURITY.md#access-and-disclosure-policy"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S04",
+      "owner": "SECURITY.md",
+      "source": "SQ-4; SEC-WEB-01; SEC-MOBILE-01",
+      "status": "resolved",
+      "decisions": [
+        "Rendering-strategy security implications",
+        "CSP and Trusted Types policy",
+        "Client storage and cache controls",
+        "Native adapters, permissions and backup policy",
+        "Any selected optional capability needing a specific review"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "SPA strict CSP/Trusted Types/no framing; no browser token storage, device-backed native tokens/no backups; no RSC/HTML/WebView/push/custom deep links or extra device permissions.",
+      "resolved_decision_refs": [
+        "SECURITY.md#client-containment"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S05",
+      "owner": "SECURITY.md",
+      "source": "SQ-5; SEC-DATA-01/02",
+      "status": "resolved",
+      "decisions": [
+        "Security validation of newly resolved product invariants",
+        "Reference binding and replay policy",
+        "Consistency and interruption verification for selected mechanisms",
+        "Do not reopen already settled statistics or commerce scope"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Independent server invariants, least-privilege roles, locked versioned transactions and actor-bound canonical replay references; derived totals/stats and failure/concurrency verification.",
+      "resolved_decision_refs": [
+        "SECURITY.md#input-and-data-integrity"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S06",
+      "owner": "SECURITY.md",
+      "source": "SQ-6; SEC-SESSION-01",
+      "status": "resolved",
+      "decisions": [
+        "Browser and native session mechanisms",
+        "Session storage",
+        "Idle and absolute lifetimes",
+        "Reauthentication triggers",
+        "Rotation and revocation",
+        "Logout scope",
+        "Credential revocation effect on existing sessions",
+        "Request-forgery protections",
+        "Stale-state and cache isolation"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Opaque tokens, secure cookie+CSRF/browser and protected bearer/native,8h/30min/fresh5min, max5 sessions, rotate/revoke/clear caches and reject stale responses.",
+      "resolved_decision_refs": [
+        "SECURITY.md#sessions-and-transport"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S07",
+      "owner": "SECURITY.md",
+      "source": "SQ-7; Failures, Exceptions and Classification",
+      "status": "resolved",
+      "decisions": [
+        "Operator and user jurisdictions",
+        "Applicable legal obligations assessed from actual scope",
+        "Participation age and any resulting requirements without assuming them",
+        "Classification beyond approved disclosure",
+        "Data collection and telemetry fields",
+        "Retention by record category",
+        "Account and player deletion/anonymization handling",
+        "Public historical results versus deletion obligations",
+        "Encryption at rest and key management",
+        "Backups, access and deletion",
+        "Recovery authority and ownership"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Adult18+ policy and publication attestation; actual legal operator facts are validated deploy inputs, not invented. Public/Internal/Restricted classification, explicit retention/erasure, encryption/keys and restore tombstone replay.",
+      "resolved_decision_refs": [
+        "SECURITY.md#input-and-data-integrity"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S08",
+      "owner": "SECURITY.md",
+      "source": "SQ-8; SEC-DATA-01; SEC-TRANSPORT-01",
+      "status": "resolved",
+      "decisions": [
+        "Service and operational identities and authentication",
+        "Adoption of proposed least-privilege database separation",
+        "Database and migration grants",
+        "Network trust and TLS configuration",
+        "Database connection protection",
+        "Exact cross-origin policy",
+        "Certificate pinning decision",
+        "Secret management",
+        "Recovery authority"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Separated runtime/migration/maintenance/audit IAM/DB authority, verified TLS, exact same-origin policy, no certificate pinning, KMS/secret rotation and protected recovery.",
+      "resolved_decision_refs": [
+        "SECURITY.md#sessions-and-transport"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S09",
+      "owner": "SECURITY.md",
+      "source": "SQ-9; SEC-RUNTIME-01",
+      "status": "resolved",
+      "decisions": [
+        "Capacity-backed parsing, size, collection and work budgets",
+        "Public read, passkey and mutation rate budgets",
+        "Timeouts, concurrency and retries",
+        "Abuse response",
+        "Runtime privileges and diagnostic limits",
+        "Trusted forwarding and invalid-configuration behavior"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Concrete body/depth/time/concurrency/rate/work budgets, privacy-limited abuse monitoring/no lockout, nonroot restricted runtime and fail-ready config; mandatory measured load evidence before release.",
+      "resolved_decision_refs": [
+        "SECURITY.md#runtime-and-operations"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S10",
+      "owner": "SECURITY.md",
+      "source": "SQ-10; SEC-OPS-01",
+      "status": "resolved",
+      "decisions": [
+        "Audit sink and event schema",
+        "Audit reader and maintenance identities",
+        "Audit retention",
+        "Integrity protection and detection",
+        "Fail-or-durable-recovery policy when audit recording fails",
+        "Alerts, thresholds and destinations",
+        "Incident owner and response procedures",
+        "Vulnerability-reporting channel and response timelines"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Transactional sanitized audit/outbox, chain/checkpoint/Object Lock protection, defined retention/readers/maintenance, rollback on durable-audit failure, alert thresholds/owner/response and real reporting contact.",
+      "resolved_decision_refs": [
+        "SECURITY.md#runtime-and-operations"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S11",
+      "owner": "SECURITY.md",
+      "source": "SQ-11; SEC-SUPPLY-01; Sources; Threat Model",
+      "status": "resolved",
+      "decisions": [
+        "Assurance target and ASVS applicability, level and verified mappings",
+        "Applicable standards and evidence",
+        "Threat-model assumption validation and risk treatment",
+        "Portable frozen references for supplied security sources",
+        "Conditional source applicability after architecture choices",
+        "Dependency, advisory and artifact verification tooling",
+        "Reproducible release evidence and ownership",
+        "Required reviewers and release checks",
+        "Exception authority, scope, expiry and treatment without creating existing-policy bypasses",
+        "Source-document version identification without inventing historical versions"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Complete project control assurance and verified ASVS5 mappings without blanket certification; portable source hashes/applicability, locked dependencies/scripts/SBOM/artifacts, human production review/no launch exceptions; historic threat analysis preserved.",
+      "resolved_decision_refs": [
+        "SECURITY.md#security-verification"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S12",
+      "owner": "SECURITY.md",
+      "source": "SQ-12; SEC-WEB-01",
+      "status": "resolved",
+      "decisions": [
+        "Whether any browser embedding is allowed",
+        "Allowed embedding contexts if any",
+        "Anti-framing mechanism and verification"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "No embedding allowed; CSP frame-ancestors none and X-Frame-Options DENY, direct-use and hostile-frame tests.",
+      "resolved_decision_refs": [
+        "SECURITY.md#client-containment"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "S13",
+      "owner": "SECURITY.md",
+      "source": "SQ-13; T-26",
+      "status": "resolved",
+      "decisions": [
+        "Whether attributable audit evidence is sufficient for authorized-admin factual misuse",
+        "Any additional approved reconciliation or review behavior, with product behavior recorded in REQUIREMENTS.md"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Accept residual authorized-admin factual misuse with attributable sanitized audit and revocation; no new reconciliation/second-person approval feature.",
+      "resolved_decision_refs": [
+        "SECURITY.md#security-posture"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "W01",
+      "owner": "AGENTS.md",
+      "source": "Development Workflow: Local setup and dependency installation",
+      "status": "resolved",
+      "decisions": [
+        "Supported developer environment",
+        "Package manager and repository layout",
+        "Dependency installation procedure",
+        "Local database and configuration setup",
+        "Development fixtures and credentials"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Pinned Node/pnpm, macOS/Linux workspace, local Compose Postgres, reviewed lifecycle installs, validated config and synthetic-only fixtures.",
+      "resolved_decision_refs": [
+        "AGENTS.md#application-setup-and-command-contract"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "W02",
+      "owner": "AGENTS.md",
+      "source": "Development Workflow: Build, lint, format, test and run commands",
+      "status": "resolved",
+      "decisions": [
+        "Build and run commands",
+        "Lint and formatting tools and commands",
+        "Test tooling and environments",
+        "Coverage policy under the existing security obligations",
+        "CI checks and commands"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Existing Python spec check distinguished from explicit future pnpm build/lint/format/typecheck/unit/integration/web/native/load/run commands; all security paths and feature accessibility require evidence.",
+      "resolved_decision_refs": [
+        "AGENTS.md#application-setup-and-command-contract"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "W03",
+      "owner": "AGENTS.md",
+      "source": "Development Workflow: Branch, commit, pull request and review conventions",
+      "status": "resolved",
+      "decisions": [
+        "Branch conventions",
+        "Commit conventions",
+        "Pull request and merge procedure",
+        "Review responsibilities",
+        "Requirement ownership and status/version conventions"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "Conventional branch/commit prefixes, coherent PRs, squash after applicable checks, jmanico owner, explicit authorized-agent docs merge and human security-sensitive production review; version/status semantics.",
+      "resolved_decision_refs": [
+        "AGENTS.md#branches-review-and-merge"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    },
+    {
+      "id": "W04",
+      "owner": "AGENTS.md",
+      "source": "Development Workflow: Release and deployment procedure",
+      "status": "resolved",
+      "decisions": [
+        "Deployment environments and CI/CD",
+        "Release ownership and procedure",
+        "Native signing and store distribution",
+        "Schema migrations during release",
+        "Rollback",
+        "Required release evidence under SECURITY.md"
+      ],
+      "resolved_on": "2026-10-13",
+      "resolution": "GitHub CI, immutable artifacts, staging then explicit reviewed production, native signed store releases, compatible migrations/seven-day rollback and90-day native API compatibility; release evidence owned explicitly.",
+      "resolved_decision_refs": [
+        "AGENTS.md#release-and-deployment"
+      ],
+      "resolution_basis": "Explicit user delegation of default decisions"
+    }
+  ],
+  "mode": "closed_delegated_defaults",
+  "delegation": {
+    "date": "2026-10-13",
+    "instruction": "from now on, automatiically answer each quuestion with the default answer and remove any ambiguity. Get us 100% ready to code.",
+    "effect": "Choose and explicitly approve current defaults; preserve prior answers and missing historical facts. No further interview questions.",
+    "follow_up": "PR and merge the specification, then freeze it and create traceable GitHub implementation issues without changing sources."
+  },
+  "closed_on": "2026-10-13",
+  "closure_limit": "Ready for implementation planning, not an assertion of working software, legal compliance or production release readiness."
+}

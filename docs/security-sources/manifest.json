@@ -1,0 +1,47 @@
+[
+  {
+    "id": "S-NODE",
+    "title": "Node.js 26 Secure Coding Prompt",
+    "source_path": "/Users/jmanico/Dropbox/github/aegis/secure-coding-knowledge/content/js/nodejs/26/prompt.md",
+    "snapshot": "docs/security-sources/S-NODE.md",
+    "sha256": "f9ef39e7a5a0435344c509227ce0ca20d481467ce17f534f76125a0da43a395a",
+    "retrieved_on": "2026-10-13",
+    "status": "reference evidence; current applicability is decided in SECURITY.md"
+  },
+  {
+    "id": "S-REACT",
+    "title": "React 19 Secure Coding Prompt",
+    "source_path": "/Users/jmanico/Dropbox/github/aegis/secure-coding-knowledge/content/js/react/19/prompt.md",
+    "snapshot": "docs/security-sources/S-REACT.md",
+    "sha256": "ed48745d0e5a320c409bdad7d4fa15e49c6821c93229e86504a6cc3440d592b5",
+    "retrieved_on": "2026-10-13",
+    "status": "reference evidence; current applicability is decided in SECURITY.md"
+  },
+  {
+    "id": "S-NATIVE",
+    "title": "React Native 0.87 Secure Coding Prompt",
+    "source_path": "/Users/jmanico/Dropbox/github/aegis/secure-coding-knowledge/content/js/react-native/0.87/prompt.md",
+    "snapshot": "docs/security-sources/S-NATIVE.md",
+    "sha256": "c263bc22ac42e9aec373c6c52d6bd2cc26ae2c7f438663ab2d72ebd0ac83b41c",
+    "retrieved_on": "2026-10-13",
+    "status": "reference evidence; current applicability is decided in SECURITY.md"
+  },
+  {
+    "id": "S-JS",
+    "title": "JavaScript ES2026 Secure Coding Prompt",
+    "source_path": "/Users/jmanico/Dropbox/github/aegis/secure-coding-knowledge/content/js/javascript/ES2026/prompt.md",
+    "snapshot": "docs/security-sources/S-JS.md",
+    "sha256": "d0fadbd0b062b19c80d9451b4444d10d6beeda8d4b322cd50fc69d536b8488f2",
+    "retrieved_on": "2026-10-13",
+    "status": "reference evidence; current applicability is decided in SECURITY.md"
+  },
+  {
+    "id": "S-TS",
+    "title": "TypeScript 7 Secure Coding Prompt",
+    "source_path": "/Users/jmanico/Dropbox/github/aegis/secure-coding-knowledge/content/js/typescript/7/prompt.md",
+    "snapshot": "docs/security-sources/S-TS.md",
+    "sha256": "d9271c173d40670b87517ef8de6d98e93c84f601c1b237246c3a328901dd03b0",
+    "retrieved_on": "2026-10-13",
+    "status": "reference evidence; current applicability is decided in SECURITY.md"
+  }
+]
