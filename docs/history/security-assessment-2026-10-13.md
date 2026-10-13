@@ -231,4 +231,3 @@ These are exact local IDs, not standards mappings. SEC links include the qualifi
 | TH-06 | T-17 |
 | TH-07 | T-16 |
 | TH-08 | T-19, T-20, T-21, T-23 |
-
