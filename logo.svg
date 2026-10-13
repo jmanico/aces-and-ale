@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="logo-title">
+  <title id="logo-title">Tennis tournament mark</title>
+  <defs>
+    <clipPath id="ball-boundary">
+      <circle cx="32" cy="32" r="26"/>
+    </clipPath>
+  </defs>
+  <circle cx="32" cy="32" r="26" fill="#1F2937"/>
+  <g clip-path="url(#ball-boundary)" fill="none" stroke="#FFFFFF" stroke-width="5">
+    <path d="M10 10 C30 16 30 48 10 54"/>
+    <path d="M54 10 C34 16 34 48 54 54"/>
+  </g>
+</svg>
